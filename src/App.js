@@ -46,11 +46,20 @@ class App extends React.Component {
     })
   }
 
+  resetHandler = () => {
+    this.setState({
+      todos: this.state.todos.filter((todo) => {
+        return todo.completed === false
+      })
+    })
+  }
+
   render() {
     return (
       <div>
         <h2>Welcome to your Todo App!</h2>
         <TodoForm 
+        resetHandler={this.resetHandler}
         todoText={this.state.todoText} 
         handleSubmit={this.handleSubmit} 
         handleChange={this.handleChange} 
