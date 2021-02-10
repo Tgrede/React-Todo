@@ -5,70 +5,58 @@ import {nanoid} from 'nanoid'
 
 
 class App extends React.Component {
-  // you will need a place to store your state in this component.
-  // design `App` to be the parent component of your application.
-  // this component is going to take care of state, and any change handlers you need to work with your state
   constructor(){
     super()
     this.state = {
-      todos: [{
-        task: '',
-        id: nanoid(),
-        completed: false
-      }],
+      todos: [],
       todoText: ''
     }
   }
-
   handleChange = (e) => {
     this.setState({
       todoText: e.target.value
     })
   }
-
   handleSubmit = (e) => {
     e.preventDefault()
     this.setState({
       todos: [
-        ...this.state.todos,
         {
           task: this.state.todoText,
           id: nanoid(),
           completed: false
-        }
+        },
+        ...this.state.todos
       ],
       todoText: ''
     })
   }
-
   handleClick = (id) => {
-    console.log('click')
     this.setState({
-      todos: [...this.state.todos,{
-
-      }]
+      todos: this.state.todos.map((todo) => {
+        if (todo.id === id){
+          return {
+            ...todo,
+            completed: !todo.completed
+          }
+        } else {
+          return todo
+        }
+      })
     })
-  }
-
-
-  componentDidUpdate(){
-    console.log(this.state.todoText)
   }
 
   render() {
     return (
       <div>
-
         <h2>Welcome to your Todo App!</h2>
-
         <TodoForm 
         todoText={this.state.todoText} 
         handleSubmit={this.handleSubmit} 
         handleChange={this.handleChange} 
         />
-
         <TodoList 
-        clickHandler={this.clickHandler} 
+        handleClick={this.handleClick}
         todos={this.state.todos}
         />
 

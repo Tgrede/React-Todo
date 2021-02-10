@@ -7,6 +7,7 @@ export default class TodoForm extends Component {
           return (
                <form onSubmit={this.props.handleSubmit}>
                   <input value={this.props.todoText} onChange={this.props.handleChange} />  
+                  
                </form>
           )
      }
